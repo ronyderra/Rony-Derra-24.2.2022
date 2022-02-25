@@ -9,22 +9,23 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-
-
-
-
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import { cities } from "../contriesData";
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
 const theme = createTheme();
 
 export default function Album() {
+
+  const [value, setValue] = React.useState(cities[0]);
+  const [inputValue, setInputValue] = React.useState('');
+
   return (
     <ThemeProvider theme={theme}>
       {/* <CssBaseline /> */}
       <main>
         <Box sx={{ bgcolor: 'background.paper', pt: 8, pb: 6, }}>
-          <Container maxWidth="sm">
+          <Container maxWidth="sm"  >
             <Typography
               component="h1"
               variant="h2"
@@ -43,6 +44,27 @@ export default function Album() {
               <Button variant="contained">Home</Button>
               <Button variant="outlined">Favorites</Button>
             </Stack>
+
+            <br />
+            <div>{`value: ${value !== null ? `'${value}'` : 'null'}`}</div>
+            <div>{`inputValue: '${inputValue}'`}</div>
+
+            <Autocomplete
+              value={value}
+              onChange={(event, newValue) => {
+                setValue(newValue);
+              }}
+              inputValue={inputValue}
+              onInputChange={(event, newInputValue) => {
+                setInputValue(newInputValue);
+              }}
+              id="controllable-states-demo"
+              options={cities}
+              sx={{ width: 300, margin: 'auto', pt: 5 }}
+              renderInput={(params) => <TextField {...params} label="Controllable" />}
+            />
+
+
           </Container>
         </Box>
 
@@ -61,8 +83,10 @@ export default function Album() {
                   <CardContent sx={{ flexGrow: 1, flexDirection: 'row' }}>
 
                     <Card sx={{ height: '100%' }}>
+                      sunday
                     </Card>
                     <Card sx={{ height: '100%', }}>
+                      monday
                     </Card>
 
 
