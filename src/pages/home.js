@@ -9,16 +9,12 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import { cities } from "../contriesData";
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+import CustomSearch from '../components/CustomSearch'
+
+const cards = [1];
 const theme = createTheme();
 
 export default function Album() {
-
-  const [value, setValue] = React.useState(cities[0]);
-  const [inputValue, setInputValue] = React.useState('');
 
   return (
     <ThemeProvider theme={theme}>
@@ -45,24 +41,7 @@ export default function Album() {
               <Button variant="outlined">Favorites</Button>
             </Stack>
 
-            <br />
-            <div>{`value: ${value !== null ? `'${value}'` : 'null'}`}</div>
-            <div>{`inputValue: '${inputValue}'`}</div>
-
-            <Autocomplete
-              value={value}
-              onChange={(event, newValue) => {
-                setValue(newValue);
-              }}
-              inputValue={inputValue}
-              onInputChange={(event, newInputValue) => {
-                setInputValue(newInputValue);
-              }}
-              id="controllable-states-demo"
-              options={cities}
-              sx={{ width: 300, margin: 'auto', pt: 5 }}
-              renderInput={(params) => <TextField {...params} label="Controllable" />}
-            />
+            <CustomSearch />
 
 
           </Container>
