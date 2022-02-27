@@ -14,7 +14,7 @@ import CustomSearch from '../components/CustomSearch'
 const cards = [1];
 const theme = createTheme();
 
-export default function Album() {
+export default function Home() {
 
   return (
     <ThemeProvider theme={theme}>
