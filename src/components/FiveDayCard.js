@@ -10,8 +10,8 @@ import ReactWeather from 'react-open-weather';
 
 export default function FiveDayCard(props) {
 
-    console.log(props.data[0].Date)
-    console.log(props)
+    // console.log(props.data[0].Date)
+    // console.log(props)
 
     const data = {
         forecast: [

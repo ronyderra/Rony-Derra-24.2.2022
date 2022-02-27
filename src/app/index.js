@@ -7,7 +7,6 @@ export const favoritesSlice = createSlice({
     reducers: {
         addFavorite(state, action) {
             state.push(action.payload)
-            console.log(action.payload)
         }
     }
 })
@@ -18,5 +17,3 @@ export default favoritesSlice.reducer
 
 export const selectFavorites = (state) => state.favorites.value;
 
-// export * from "./store"
-// export * as actionCreators from "./action-creator/actions"

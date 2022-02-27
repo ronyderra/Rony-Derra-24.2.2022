@@ -22,11 +22,9 @@ export default function CustomSearch() {
         const forecastReasponse = await axios.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/` + key + `?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f`)
         setKey(key)
         const forecast = forecastReasponse.data;
-        console.log(forecast.DailyForecasts)
+        // console.log(forecast.DailyForecasts)
         setSearchData(forecast.DailyForecasts)
     }
-
-    
 
     return (
         <div style={{margin:'auto'}}>
