@@ -6,7 +6,7 @@ import { Button } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux'
 import {
     addFavorite
-} from '../app/favoritesSlice'
+} from '../app/index'
 
 export default function CustomSearch() {
 
@@ -16,7 +16,6 @@ export default function CustomSearch() {
     const dispatch = useDispatch()
 
     const onSubmit = async (val) => {
-
         const KeyResponse = await axios.get('http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f&q=' + val)
         const key = KeyResponse.data[0].Key
         setKeyResponse(KeyResponse.data[0])
