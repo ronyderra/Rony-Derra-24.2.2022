@@ -30,11 +30,12 @@ function App() {
             <Typography component="h1" variant="h2" align="center" color="text.primary" gutterBottom> Weather Search</Typography>
             <Stack sx={{ pt: 4 }} direction="row" spacing={2} justifyContent="center">
               <nav>
-                <Button style={{margin: '0px 10px 0px 0px'}} variant="contained"><Link style={{ color: 'white', textDecoration: 'none' }} to="/WeatherTask/Home">Home</Link></Button>
+                <Button style={{ margin: '0px 10px 0px 0px' }} variant="contained"><Link style={{ color: 'white', textDecoration: 'none' }} to="/WeatherTask/Home">Home</Link></Button>
                 <Button variant="outlined"><Link style={{ color: 'black', textDecoration: 'none' }} to="/WeatherTask/Favorites">Favorites</Link></Button>
               </nav>
             </Stack>
           </Container>
+
         </Box>
         <Routes>
           <Route path="/" element={<Home />} />

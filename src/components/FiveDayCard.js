@@ -1,17 +1,11 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card';
 import ReactWeather from 'react-open-weather';
 
 
 
 export default function FiveDayCard(props) {
 
-    // console.log(props.data[0].Date)
-    // console.log(props)
+    
 
     const data = {
         forecast: [
@@ -57,6 +51,7 @@ export default function FiveDayCard(props) {
             temperature: { current: '-2', min: -3, max: 1 },
             wind: '2',
             humidity: 90,
+            icon: "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd"
         },
     };
 
