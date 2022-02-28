@@ -3,8 +3,8 @@ import SearchField from "react-search-field";
 import axios from 'axios';
 import FiveDayCard from './FiveDayCard';
 import { Button } from '@mui/material';
-import {  useDispatch } from 'react-redux'
-import {addFavorite} from '../Store/index'
+import { useDispatch } from 'react-redux'
+import { addFavorite } from '../Store/index'
 
 const CustomSearch = () => {
     const [searchData, setSearchData] = React.useState('');
@@ -16,7 +16,7 @@ const CustomSearch = () => {
         const KeyResponse = await axios.get('http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f&q=' + val)
         const key = KeyResponse.data[0].Key
         setKeyResponse(KeyResponse.data[0])
-        const forecastReasponse = await axios.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/` + key + `?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f`)
+        const forecastReasponse = await axios.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/` + key + `?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f&details=true&metric=true`)
         setKey(key)
         const forecast = forecastReasponse.data;
         setSearchData(forecast.DailyForecasts)
@@ -36,7 +36,11 @@ const CustomSearch = () => {
             <br />
             <br />
             <br />
-            {searchData ? <FiveDayCard data={searchData} local={KeyResponse} /> : <div></div>}
+            {searchData ?
+                <FiveDayCard
+                    data={searchData}
+                    local={KeyResponse}
+                /> : <div></div>}
 
         </div>
     );
