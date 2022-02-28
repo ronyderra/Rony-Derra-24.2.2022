@@ -5,8 +5,8 @@ import axios from 'axios';
 export default function Favorites() {
   const currentconditionsUrl = 'http://dataservice.accuweather.com/currentconditions/v1/'
   const locationsUrl = 'http://dataservice.accuweather.com/locations/v1/'
-  const [favoritesData, setFavoritesData] = useState([])
   const favorites = useSelector(state => state.favorites)
+  const [favoritesData, setFavoritesData] = useState([{}])
 
   const getData = async () => {
     for (let i = 0; i < favorites.length; i++) {
@@ -16,18 +16,19 @@ export default function Favorites() {
       const KeyResCityName = await axios.get(locationsUrl + favorites[i] + '?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f')
       const name = KeyResCityName.data.AdministrativeArea.EnglishName
       let obj = { temperature, weatherText, name }
-      console.log(obj)
+      setFavoritesData(favoritesData => [...favoritesData, obj])
     }
   }
 
-  useEffect(async () => {
-    await getData()
-  });
-
+  useEffect(() => {
+    getData()
+  },[]);
 
   return (
     <div>
- 
-    </div>
+    {favoritesData?.map((item, i) =>
+      <div key={i}>{item.name}</div>
+    )}
+  </div>
   );
 }
