@@ -20,7 +20,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 
-export default function Favorites() {
+const Favorites = () => {
   const currentconditionsUrl = 'http://dataservice.accuweather.com/currentconditions/v1/'
   const locationsUrl = 'http://dataservice.accuweather.com/locations/v1/'
   const favorites = useSelector(state => state.favorites)
@@ -73,3 +73,4 @@ export default function Favorites() {
     </Container>
   );
 }
+export default  Favorites;

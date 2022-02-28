@@ -1,12 +1,11 @@
 import React from 'react';
-// import Album from './pages/home';
 import './App.css';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Routes, Route, Link } from "react-router-dom";
-import Home from './pages/home'
-import Favorites from './pages/favorites'
+import Home from './Pages/home'
+import Favorites from './Pages/favorites'
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';

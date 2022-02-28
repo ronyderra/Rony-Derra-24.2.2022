@@ -3,13 +3,10 @@ import SearchField from "react-search-field";
 import axios from 'axios';
 import FiveDayCard from './FiveDayCard';
 import { Button } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux'
-import {
-    addFavorite
-} from '../app/index'
+import {  useDispatch } from 'react-redux'
+import {addFavorite} from '../Store/index'
 
-export default function CustomSearch() {
-
+const CustomSearch = () => {
     const [searchData, setSearchData] = React.useState('');
     const [KeyResponse, setKeyResponse] = React.useState('');
     const [key, setKey] = React.useState('');
@@ -22,26 +19,26 @@ export default function CustomSearch() {
         const forecastReasponse = await axios.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/` + key + `?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f`)
         setKey(key)
         const forecast = forecastReasponse.data;
-        // console.log(forecast.DailyForecasts)
         setSearchData(forecast.DailyForecasts)
     }
 
     return (
-        <div style={{margin:'auto'}}>
+        <div style={{ margin: 'auto' }}>
             <SearchField
                 placeholder="Search..."
                 searchText=""
                 classNames="test-class"
                 onEnter={(val) => onSubmit(val)}
                 onSearchClick={(val) => onSubmit(val)}
-                sx={{tp:'5px'}}
+                sx={{ tp: '5px' }}
             />
             <Button onClick={() => dispatch(addFavorite(key))} >Add to favorites</Button>
             <br />
             <br />
             <br />
-            { searchData ? <FiveDayCard data={searchData} local={KeyResponse} />  : <div></div>}
-           
+            {searchData ? <FiveDayCard data={searchData} local={KeyResponse} /> : <div></div>}
+
         </div>
     );
 }
+export default CustomSearch

@@ -1,11 +1,7 @@
 import * as React from 'react';
 import ReactWeather from 'react-open-weather';
 
-
-
-export default function FiveDayCard(props) {
-
-    
+const FiveDayCard = (props)  => {
 
     const data = {
         forecast: [
@@ -67,3 +63,4 @@ export default function FiveDayCard(props) {
         </div>
     );
 }
+export default FiveDayCard;
