@@ -7,9 +7,20 @@ export const favoritesSlice = createSlice({
     reducers: {
         addFavorite(state, action) {
             state.push(action.payload)
-        }
+        },
     }
 })
+
+// const keyState = 0;
+// export const keySlice = createSlice({
+//     name: 'key',
+//     keyState,
+//     reducers: {
+//         changeKey(state, action) {
+//             return state.value - state.value + action.payload
+//         },
+//     }
+// })
 
 export const { addFavorite } = favoritesSlice.actions
 export default favoritesSlice.reducer
