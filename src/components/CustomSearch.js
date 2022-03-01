@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import FiveDayCard from './FiveDayCard';
 import { Button } from '@mui/material';
 import { useDispatch } from 'react-redux'
