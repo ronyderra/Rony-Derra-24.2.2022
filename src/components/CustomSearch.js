@@ -38,17 +38,13 @@ const CustomSearch = () => {
                 className='item'
                 id="controllable-states-demo"
                 value={value}
-                onChange={(event, newValue) => {
-                    setValue(newValue);
-                  }}
+                onChange={(event, newValue) => {setValue(newValue);}}
                 inputValue={inputValue}
                 onInputChange={(event, newInputValue) => { setInputValue(newInputValue); onSubmit(newInputValue) }}
                 options={options}
                 getOptionLabel={(option) => option? option.LocalizedName : 'Tel Aviv'}
                 sx={{ width: '80%' , margin:'auto' }}
                 renderInput={(params) => <TextField {...params} label="Choose City"/>}
-                // autoSelect={true}
-                // defaultValue={options[128]}
                 disableClearable={true}
             />
             <br/>
