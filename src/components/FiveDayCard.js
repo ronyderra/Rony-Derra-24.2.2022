@@ -1,15 +1,8 @@
 import * as React from 'react';
 import ReactWeather from 'react-open-weather';
+import formatDate from '../Utils/dateConverter';
 
 const FiveDayCard = (props) => {
-
-    const formatDate = (propDate) => {
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        const parsed = Date.parse(propDate)
-        const dateString = new Date(parsed)
-        const date = new Date(dateString)
-        return date.toLocaleDateString("en-US", options)
-    }
 
     const data = {
         forecast: [

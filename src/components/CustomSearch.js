@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { addFavorite } from '../Store/index'
 import { Autocomplete } from '@mui/material';
 import TextField from '@mui/material/TextField';
+import API from '../Utils/getData'
 
 const CustomSearch = () => {
     const [searchData, setSearchData] = useState('');
@@ -18,17 +19,17 @@ const CustomSearch = () => {
     const dispatch = useDispatch()
 
     const onSubmit = async (chosenCity) => {
-        const KeyResponse = await axios.get('http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f&q=' + chosenCity)
+        const KeyResponse = await API.get('locations/v1/cities/autocomplete?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f&q=' + chosenCity)
         const key = KeyResponse.data[0].Key
         setKeyResponse(KeyResponse.data[0])
-        const forecastReasponse = await axios.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/` + key + `?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f&details=true&metric=true`)
+        const forecastReasponse = await API.get(`forecasts/v1/daily/5day/` + key + `?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f&details=true&metric=true`)
         setKey(key)
         const forecast = forecastReasponse.data.DailyForecasts;
         setSearchData(forecast)
     }
 
     useEffect(async () => {
-        const res = await axios.get('http://dataservice.accuweather.com/locations/v1/topcities/150?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f')
+        const res = await API.get('locations/v1/topcities/150?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f')
         const topOptions = res.data
         setOptions(topOptions)
         const resp = topOptions.findIndex(({ LocalizedName }) => LocalizedName === 'Tel Aviv')
