@@ -1,8 +1,22 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactWeather from 'react-open-weather';
 import formatDate from '../Utils/dateConverter';
+import API from '../Utils/getData'
+
 
 const FiveDayCard = ({ data, local }) => {
+    const currentconditionsUrl = 'currentconditions/v1/'
+    const [currentTemp, setCurrentTemp] = useState('')
+
+    const getCurrentTemp = async (key) => {
+        const KeyResponseData = await API.get(currentconditionsUrl + key + '?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f&details=true')
+        const temperature = KeyResponseData.data[0].Temperature.Metric.Value
+        setCurrentTemp(temperature)
+    }
+
+    useEffect(() => {
+        getCurrentTemp(local.Key)
+    });
 
     const cardData = {
         forecast: [
@@ -45,8 +59,8 @@ const FiveDayCard = ({ data, local }) => {
         current: {
             date: formatDate(data[0].Date),
             description: data[0].Day.IconPhrase,
-            temperature: { current: '-2', min: data[0].Temperature.Minimum.Value, max: data[0].Temperature.Maximum.Value },
-            wind: '2',
+            temperature: { current: currentTemp, min: data[0].Temperature.Minimum.Value, max: data[0].Temperature.Maximum.Value },
+            wind: data[0].Day.Wind.Speed.Value,
             humidity: 90,
             icon: ''
         },
