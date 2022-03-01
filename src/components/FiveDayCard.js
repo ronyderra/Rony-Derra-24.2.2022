@@ -2,50 +2,50 @@ import * as React from 'react';
 import ReactWeather from 'react-open-weather';
 import formatDate from '../Utils/dateConverter';
 
-const FiveDayCard = (props) => {
+const FiveDayCard = ({ data, local }) => {
 
-    const data = {
+    const cardData = {
         forecast: [
             {
-                date: formatDate(props.data[1].Date),
-                description: props.data[1].Day.IconPhrase,
-                temperature: { min: props.data[1].Temperature.Minimum.Value, max: props.data[1].Temperature.Maximum.Value },
+                date: formatDate(data[1].Date),
+                description: data[1].Day.IconPhrase,
+                temperature: { min: data[1].Temperature.Minimum.Value, max: data[1].Temperature.Maximum.Value },
                 wind: '2',
                 humidity: 60,
             },
             {
-                date: formatDate(props.data[4].Date),
-                description: props.data[4].Day.IconPhrase,
-                temperature: { min: props.data[4].Temperature.Minimum.Value, max: props.data[4].Temperature.Maximum.Value },
+                date: formatDate(data[4].Date),
+                description: data[4].Day.IconPhrase,
+                temperature: { min: data[4].Temperature.Minimum.Value, max: data[4].Temperature.Maximum.Value },
                 wind: '3',
                 humidity: 67,
             },
             {
-                date: formatDate(props.data[3].Date),
-                description: props.data[3].Day.IconPhrase,
-                temperature: { min: props.data[3].Temperature.Minimum.Value, max: props.data[3].Temperature.Maximum.Value },
+                date: formatDate(data[3].Date),
+                description: data[3].Day.IconPhrase,
+                temperature: { min: data[3].Temperature.Minimum.Value, max: data[3].Temperature.Maximum.Value },
                 wind: '3',
                 humidity: 67,
             },
             {
-                date: formatDate(props.data[2].Date),
-                description: props.data[2].Day.IconPhrase,
-                temperature: { min: props.data[2].Temperature.Minimum.Value, max: props.data[2].Temperature.Maximum.Value  },
+                date: formatDate(data[2].Date),
+                description: data[2].Day.IconPhrase,
+                temperature: { min: data[2].Temperature.Minimum.Value, max: data[2].Temperature.Maximum.Value },
                 wind: '3',
                 humidity: 67,
             },
             {
-                date: formatDate(props.data[1].Date),
-                description: props.data[1].Day.IconPhrase,
-                temperature: { min: props.data[1].Temperature.Minimum.Value, max: props.data[1].Temperature.Maximum.Value  },
+                date: formatDate(data[1].Date),
+                description: data[1].Day.IconPhrase,
+                temperature: { min: data[1].Temperature.Minimum.Value, max: data[1].Temperature.Maximum.Value },
                 wind: '3',
                 humidity: 67,
             },
         ],
         current: {
-            date: formatDate(props.data[0].Date),
-            description: props.data[0].Day.IconPhrase,
-            temperature: { current: '-2', min: props.data[0].Temperature.Minimum.Value, max: props.data[0].Temperature.Maximum.Value  },
+            date: formatDate(data[0].Date),
+            description: data[0].Day.IconPhrase,
+            temperature: { current: '-2', min: data[0].Temperature.Minimum.Value, max: data[0].Temperature.Maximum.Value },
             wind: '2',
             humidity: 90,
             icon: ''
@@ -55,9 +55,9 @@ const FiveDayCard = (props) => {
     return (
         <div >
             <ReactWeather
-                data={data}
+                data={cardData}
                 lang="en"
-                locationLabel={props.local.LocalizedName}
+                locationLabel={local.LocalizedName}
                 unitsLabels={{ temperature: 'C', windSpeed: 'Km/h' }}
                 showForecast
             />
