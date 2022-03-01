@@ -16,8 +16,7 @@ const CustomSearch = () => {
     const [inputValue, setInputValue] = useState('');
     const [options, setOptions] = useState([{}]);
     const dispatch = useDispatch()
-
-
+ 
     const onSubmit = async (chosenCity) => {
         const autocomplete = await API.get('locations/v1/cities/autocomplete?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f&q=' + chosenCity)
         const key = autocomplete.data[0].Key
@@ -31,8 +30,6 @@ const CustomSearch = () => {
     useEffect(async () => {
         const topcities = await API.get('locations/v1/topcities/150?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f')
         setOptions(topcities.data)
-        const telAvivIndex = topcities.data.findIndex(({ LocalizedName }) => LocalizedName === 'Tel Aviv')
-        setValue(telAvivIndex)
     }, []);
 
     return (
@@ -44,10 +41,13 @@ const CustomSearch = () => {
                 inputValue={inputValue}
                 onInputChange={(event, newInputValue) => { setInputValue(newInputValue); onSubmit(newInputValue) }}
                 options={options}
-                getOptionLabel={(option) => option.LocalizedName}
-                sx={{ width: 300 }}
-                renderInput={(params) => <TextField {...params} label="Choose City" />}
+                getOptionLabel={(option) => option? option.LocalizedName: "Tel Aviv"}
+                sx={{ width: '80%' , margin:'auto' }}
+                renderInput={(params) => <TextField {...params} label="Choose City"/>}
+                autoSelect={true}
+                defaultValue={options[128]}
             />
+            <br/>
             <Button className='item' onClick={() => dispatch(addFavorite(key))} >Add to favorites</Button>
             {searchData ? <FiveDayCard data={searchData} local={KeyResponse} /> : <div></div>}
         </div>
