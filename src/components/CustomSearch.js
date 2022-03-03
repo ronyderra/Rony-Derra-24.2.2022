@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { addFavorite } from '../Store/index'
 import { Autocomplete } from '@mui/material';
 import TextField from '@mui/material/TextField';
-import API from '../Utils/getData'
+import getData from '../Utils/getData'
 import './CustomSearch'
 
 const CustomSearch = () => {
@@ -16,20 +16,21 @@ const CustomSearch = () => {
     const [inputValue, setInputValue] = useState('');
     const [options, setOptions] = useState([{}]);
     const dispatch = useDispatch()
- 
+
     const onSubmit = async (chosenCity) => {
-        const autocomplete = await API.get('locations/v1/cities/autocomplete?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f&q=' + chosenCity)
-        const key = autocomplete.data[0].Key
-        setKeyResponse(autocomplete.data[0])
-        const forecasts = await API.get(`forecasts/v1/daily/5day/` + key + `?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f&details=true&metric=true`)
+        console.log(chosenCity)
+        const autocomplete = await getData.autocomplete(chosenCity)
+        const key = autocomplete[0].Key
+        setKeyResponse(autocomplete[0])
+        const forecasts = await getData.forecasts(key)
         setKey(key)
-        const forecastsSearchData = forecasts.data.DailyForecasts;
+        const forecastsSearchData = forecasts.DailyForecasts;
         setSearchData(forecastsSearchData)
     }
 
     useEffect(async () => {
-        const topcities = await API.get('locations/v1/topcities/150?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f')
-        setOptions(topcities.data)
+        const topcities = await getData.locations()
+        setOptions(topcities)
     }, []);
 
     return (
@@ -38,16 +39,16 @@ const CustomSearch = () => {
                 className='item'
                 id="controllable-states-demo"
                 value={value}
-                onChange={(event, newValue) => {setValue(newValue);}}
+                onChange={(event, newValue) => { setValue(newValue); }}
                 inputValue={inputValue}
                 onInputChange={(event, newInputValue) => { setInputValue(newInputValue); onSubmit(newInputValue) }}
                 options={options}
-                getOptionLabel={(option) => option? option.LocalizedName : 'Tel Aviv'}
-                sx={{ width: '80%' , margin:'auto' }}
-                renderInput={(params) => <TextField {...params} label="Choose City"/>}
+                getOptionLabel={(option) => option ? option.LocalizedName : 'Tel Aviv'}
+                sx={{ width: '80%', margin: 'auto' }}
+                renderInput={(params) => <TextField {...params} label="Choose City" />}
                 disableClearable={true}
             />
-            <br/>
+            <br />
             <Button className='item' onClick={() => dispatch(addFavorite(key))} >Add to favorites</Button>
             {searchData ? <FiveDayCard data={searchData} local={KeyResponse} /> : <div></div>}
         </div>

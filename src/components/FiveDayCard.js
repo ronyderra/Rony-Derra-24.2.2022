@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import ReactWeather from 'react-open-weather';
 import formatDate from '../Utils/dateConverter';
-import API from '../Utils/getData'
+import getData from '../Utils/getData'
 
 
 const FiveDayCard = ({ data, local }) => {
-    const currentconditionsUrl = 'currentconditions/v1/'
     const [currentTemp, setCurrentTemp] = useState('')
 
+
     const getCurrentTemp = async (key) => {
-        const KeyResponseData = await API.get(currentconditionsUrl + key + '?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f&details=true')
-        const temperature = KeyResponseData.data[0].Temperature.Metric.Value
+        const KeyResponseData = await getData.currentConditions(key)
+        const temperature = KeyResponseData[0].Temperature.Metric.Value
         setCurrentTemp(temperature)
     }
 

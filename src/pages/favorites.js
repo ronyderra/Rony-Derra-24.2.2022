@@ -5,22 +5,20 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import API from '../Utils/getData'
+import getData from '../Utils/getData'
 
 const Favorites = () => {
-  const currentconditionsUrl = 'currentconditions/v1/'
-  const locationsUrl = 'locations/v1/'
   const favorites = useSelector(state => state.favorites)
   const [favoritesData, setFavoritesData] = useState([{}])
 
-  const getData = async () => {
+  const getFavoriteData = async () => {
     for (let i = 0; i < favorites.length; i++) {
       if (favorites[i]) {
-        const KeyResponseData = await API.get(currentconditionsUrl + favorites[i] + '?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f&details=true')
-        const temperature = KeyResponseData.data[0].Temperature.Imperial.Value
-        const weatherText = KeyResponseData.data[0].WeatherText
-        const KeyResCityName = await API.get(locationsUrl + favorites[i] + '?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f')
-        const name = KeyResCityName.data.AdministrativeArea.EnglishName
+        const KeyResData = await getData.currentConditions(favorites[i])
+        const temperature = KeyResData[0].Temperature.Imperial.Value
+        const weatherText = KeyResData[0].WeatherText
+        const KeyResCityName = await getData.cityName(favorites[i])
+        const name = KeyResCityName.AdministrativeArea.EnglishName
         let obj = { temperature, weatherText, name }
         setFavoritesData(favoritesData => [...favoritesData, obj])
       }
@@ -28,7 +26,7 @@ const Favorites = () => {
   }
 
   useEffect(() => {
-    getData()
+    getFavoriteData()
   }, []);
 
   return (
