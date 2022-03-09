@@ -18,7 +18,6 @@ const CustomSearch = () => {
     const dispatch = useDispatch()
 
     const onSubmit = async (chosenCity) => {
-        console.log(chosenCity)
         const autocomplete = await getData.autocomplete(chosenCity)
         const key = autocomplete[0].Key
         setKeyResponse(autocomplete[0])

@@ -7,7 +7,7 @@ const autocomplete = async (chosenCity) => {
   const autocompleteRes = await axios.get(URL + 'locations/v1/cities/autocomplete?' + API_KEY + '&q=' + chosenCity)
   return autocompleteRes.data
 }
-
+  
 const locations = async () => {
   const topcitiesRes = await axios.get(URL + 'locations/v1/topcities/150?apikey=fdyjyD2XskiXjlWqEtPAXkZ2KhdMSG8f')
   return topcitiesRes.data;
