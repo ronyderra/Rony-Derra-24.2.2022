@@ -13,7 +13,6 @@ const Favorites = () => {
 
   const getFavoriteData = () => {
     favorites.forEach(async (element) => {
-
       const KeyResData = await getData.currentConditions(element)
       const KeyResCityName = await getData.cityName(element)
       const temperature = KeyResData[0].Temperature.Imperial.Value
@@ -21,21 +20,7 @@ const Favorites = () => {
       const name = KeyResCityName.AdministrativeArea.EnglishName
       let obj = { temperature, weatherText, name, element }
       setFavoritesData(favoritesData => [...favoritesData, obj])
-      console.log(favoritesData)
-
     });
-
-    // for (let i = 0; i < favorites.length; i++) {
-    //   if (favorites[i]) {
-    //     const KeyResData = await getData.currentConditions(favorites[i])
-    //     const temperature = KeyResData[0].Temperature.Imperial.Value
-    //     const weatherText = KeyResData[0].WeatherText
-    //     const KeyResCityName = await getData.cityName(favorites[i])
-    //     const name = KeyResCityName.AdministrativeArea.EnglishName
-    //     let obj = { temperature, weatherText, name }
-    //     setFavoritesData(favoritesData => [...favoritesData, obj])
-    //   }
-    // }
   }
 
   useEffect(() => {
