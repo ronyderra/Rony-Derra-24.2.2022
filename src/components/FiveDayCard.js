@@ -6,6 +6,8 @@ import getData from '../Utils/getData'
 
 const FiveDayCard = ({ keyVal, cityName }) => {
 
+    console.log(keyVal)
+
     const [currentStatus, setCurrentStatus] = useState({})
     const [forecastData, setForecastData] = useState([])
 
@@ -43,7 +45,7 @@ const FiveDayCard = ({ keyVal, cityName }) => {
     useEffect(() => {
         getCurrentTemp(keyVal)
         getForecastData(keyVal)
-    }, []);
+    }, [keyVal]);
 
     const cardData = {
         forecast: forecastData,
