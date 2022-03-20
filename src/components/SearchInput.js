@@ -3,20 +3,17 @@ import TextField from '@mui/material/TextField';
 import { Autocomplete, CircularProgress } from '@mui/material';
 import getData from '../Utils/getData'
 
-export default function Asynchronous() {
-    const [open, setOpen] = useState(false);
-    const [options, setOptions] = useState([{}]);
-    const loading = open && options.length === 0;
+const SearchInput = () => {
+    const [options, setOptions] = useState([]);
 
     const onChangeHandle = async (value) => {
         const response = await getData.autocomplete(value)
         if (response) {
-            const items = response.map((item, id) => { return { name: item.LocalizedName, key: id } })
+            const items = response.map((item, id) => { return { cityName: item.LocalizedName, key: id } })
             setOptions(items)
         }
         else {
             setOptions([])
-            setOpen(false)
         }
     };
 
@@ -25,47 +22,22 @@ export default function Asynchronous() {
         // console.log(newValue)
     }
 
-    useEffect(() => {if(!open) {setOptions([])}}, [open]);
 
     return (
 
         <Autocomplete
-            id="asynchronous-demo"
-            style={{width:'80%', margin:'auto'}}
-            open={open}
-            onOpen={() => {setOpen(true)}}
-            onClose={() => {setOpen(false)}}
-            getOptionLabel={option => option.name}
+            id="cityAutocomplete"
+            style={{ width: '80%', margin: 'auto' }}
             options={options}
-            loading={loading}
-            onInputChange={(event, newInputVal) => {handleInputChang(event, newInputVal)}}
+            getOptionLabel={(option) => option.cityName}
+            defaultValue={{ cityName: "Tel Aviv" }}
+            onInputChange={(event, newInputVal) => { onChangeHandle(newInputVal) }}
 
 
-            renderInput={params => (
-                <TextField
-                    {...params}
-                    label="Choose City"
-                    variant="outlined"
-                    onChange={ev => {
-                        if (ev.target.value !== "" || ev.target.value !== null) {
-                            onChangeHandle(ev.target.value);
-                        }
-                    }}
-                    InputProps={{
-                        ...params.InputProps,
-                        endAdornment: (
-                            <React.Fragment>
-                                {loading ? (
-                                    <CircularProgress color="inherit" size={20} />
-                                ) : null}
-                                {params.InputProps.endAdornment}
-                            </React.Fragment>
-                        )
-                    }}
-                />
-            )}
+            renderInput={(params) => { return <TextField {...params} label="Choose City" /> }
+            }
         />
-
 
     );
 }
+export default SearchInput;
