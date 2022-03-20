@@ -7,10 +7,7 @@ const Home = () => {
   return (
     <Container sx={{ py: 8 }} maxWidth="md">
       <SearchInput />
-      <br />
-      <br />
-      <br />
-      <CustomSearch />
+      {/* <CustomSearch /> */}
     </Container>
   );
 }
