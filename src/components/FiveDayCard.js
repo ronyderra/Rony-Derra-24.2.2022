@@ -4,65 +4,56 @@ import formatDate from '../Utils/dateConverter';
 import getData from '../Utils/getData'
 
 
-const FiveDayCard = ({ data, local }) => {
-    const [currentTemp, setCurrentTemp] = useState('')
+const FiveDayCard = ({ keyVal, cityName }) => {
+
+    const [currentStatus, setCurrentStatus] = useState({})
+    const [forecastData, setForecastData] = useState([])
 
 
-    const getCurrentTemp = async (key) => {
-        const KeyResponseData = await getData.currentConditions(key)
-        const temperature = KeyResponseData[0].Temperature.Metric.Value
-        setCurrentTemp(temperature)
+    const getCurrentTemp = async (keyVal) => {
+        const keyResponseData = await getData.currentConditions(keyVal)
+        const res = keyResponseData[0]
+        setCurrentStatus({
+            temperature: res.Temperature.Metric.Value,
+            description: res.WeatherText,
+            date: res.LocalObservationDateTime,
+            min: res.TemperatureSummary.Past24HourRange.Minimum.Metric.Value,
+            max: res.TemperatureSummary.Past24HourRange.Maximum.Metric.Value,
+            wind: res.Wind.Speed.Metric.Value,
+            humidity: res.RelativeHumidity
+        })
+    }
+
+    const getForecastData = async (keyVal) => {
+        const keyResponseData = await getData.forecasts(keyVal)
+        const mapped = keyResponseData.DailyForecasts.map((item, index) => {
+            return (
+                {
+                    key: index,
+                    date: formatDate(item.Date),
+                    description: item.Day.IconPhrase,
+                    icon: '',
+                    temperature: { min: item.Temperature.Minimum.Value, max: item.Temperature.Maximum.Value },
+                }
+            )
+        })
+        setForecastData(mapped)
     }
 
     useEffect(() => {
-        getCurrentTemp(local.Key)
-    });
+        getCurrentTemp(keyVal)
+        getForecastData(keyVal)
+    }, []);
 
     const cardData = {
-        forecast: [
-            {
-                date: formatDate(data[1].Date),
-                description: data[1].Day.IconPhrase,
-                temperature: { min: data[1].Temperature.Minimum.Value, max: data[1].Temperature.Maximum.Value },
-                wind: '2',
-                humidity: 60,
-            },
-            {
-                date: formatDate(data[4].Date),
-                description: data[4].Day.IconPhrase,
-                temperature: { min: data[4].Temperature.Minimum.Value, max: data[4].Temperature.Maximum.Value },
-                wind: '3',
-                humidity: 67,
-            },
-            {
-                date: formatDate(data[3].Date),
-                description: data[3].Day.IconPhrase,
-                temperature: { min: data[3].Temperature.Minimum.Value, max: data[3].Temperature.Maximum.Value },
-                wind: '3',
-                humidity: 67,
-            },
-            {
-                date: formatDate(data[2].Date),
-                description: data[2].Day.IconPhrase,
-                temperature: { min: data[2].Temperature.Minimum.Value, max: data[2].Temperature.Maximum.Value },
-                wind: '3',
-                humidity: 67,
-            },
-            {
-                date: formatDate(data[1].Date),
-                description: data[1].Day.IconPhrase,
-                temperature: { min: data[1].Temperature.Minimum.Value, max: data[1].Temperature.Maximum.Value },
-                wind: '3',
-                humidity: 67,
-            },
-        ],
+        forecast: forecastData,
         current: {
-            date: formatDate(data[0].Date),
-            description: data[0].Day.IconPhrase,
-            temperature: { current: currentTemp, min: data[0].Temperature.Minimum.Value, max: data[0].Temperature.Maximum.Value },
-            wind: data[0].Day.Wind.Speed.Value,
-            humidity: 90,
-            icon: ''
+            date: formatDate(currentStatus.date),
+            description: currentStatus.description,
+            icon: '',
+            temperature: { current: currentStatus.temperature, min: currentStatus.min, max: currentStatus.max },
+            wind: currentStatus.wind,
+            humidity: currentStatus.humidity,
         },
     };
 
@@ -71,7 +62,7 @@ const FiveDayCard = ({ data, local }) => {
             <ReactWeather
                 data={cardData}
                 lang="en"
-                locationLabel={local.LocalizedName}
+                locationLabel={cityName}
                 unitsLabels={{ temperature: 'C', windSpeed: 'Km/h' }}
                 showForecast
             />
