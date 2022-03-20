@@ -6,13 +6,16 @@ import FiveDayCard from './FiveDayCard';
 
 const SearchInput = () => {
     const [options, setOptions] = useState([]);
-    const [key, setKey] = useState("215854")
+    const [apiKey, setApiKey] = useState("215854")
     const [cityName, setCityName] = useState('Tel Aviv')
 
-    const onChangeHandle = async (value) => {
+    const onInputChangeHandel = async (value) => {
+        console.log('Input:' + value)
         const response = await getData.autocomplete(value)
         if (response) {
-            const items = response.map((item, id) => { return { cityName: item.LocalizedName, key: id } })
+            const items = response.map((item, id) => {
+                return { cityName: item.LocalizedName, key: id, apiKey: item.Key }
+            })
             setOptions(items)
         }
         else {
@@ -20,6 +23,13 @@ const SearchInput = () => {
         }
     };
 
+    const onChangeHandel = (value) => {
+        if (value) {
+            console.log(value.apiKey)
+            setApiKey(value.apiKey)
+            setCityName(value.cityName)
+        }
+    }
 
     return (
         <>
@@ -29,15 +39,14 @@ const SearchInput = () => {
                 options={options}
                 getOptionLabel={(option) => option.cityName}
                 defaultValue={{ cityName: "Tel Aviv" }}
-               
-                onInputChange={(event, newInputVal) => { onChangeHandle(newInputVal) }}
-               
+                onInputChange={(event, newInputVal) => { onInputChangeHandel(newInputVal) }}
+                onChange={(event, newChangeVal) => { onChangeHandel(newChangeVal) }}
                 renderInput={(params) => { return <TextField {...params} label="Choose City" /> }}
             />
             <br />
             <br />
             <br />
-            <FiveDayCard keyVal={key} cityName={cityName} />
+            <FiveDayCard keyVal={apiKey} cityName={cityName} />
         </>
     );
 }
