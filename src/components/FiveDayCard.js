@@ -3,14 +3,10 @@ import ReactWeather from 'react-open-weather';
 import formatDate from '../Utils/dateConverter';
 import getData from '../Utils/getData'
 
-
 const FiveDayCard = ({ keyVal, cityName }) => {
-
-    console.log(keyVal)
 
     const [currentStatus, setCurrentStatus] = useState({})
     const [forecastData, setForecastData] = useState([])
-
 
     const getCurrentTemp = async (keyVal) => {
         const keyResponseData = await getData.currentConditions(keyVal)
